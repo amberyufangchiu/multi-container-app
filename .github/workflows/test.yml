@@ -1,4 +1,4 @@
-name: Test
+name: Build and Push Images
 
 on:
   push:
@@ -6,15 +6,15 @@ on:
       - main
 
 jobs:
-  test:
+  publish_images:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Build image
-        run: docker build ./server/ -t amber1128docker/fibonacci-calculator 
+        run: docker build ./server/ -t amber1128docker/fibonacci-calculator:latest
 
       - name: Push image to Docker Hub
         run: docker login -u amber1128docker -p ${{ secrets.DOCKER_HUB_TOKEN }}
-        run: docker push amber1128docker/fibonacci-calculator
+          docker push amber1128docker/fibonacci-calculator:latest
