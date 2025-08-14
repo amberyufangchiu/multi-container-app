@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "server/Dockerfile"
+      - "client/Dockerfile"
 
 jobs:
   publish_images:
@@ -12,11 +15,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Before install
+        run: docker build -t amber1128docker/react-test -f ./client/Dockerfile.dev ./client
+
+      - name: Run test
+        run: docker run amber1128docker/react-test npm test -- --coverage
+
       - name: Build image
-        run: docker build ./server/ -t amber1128docker/fibonacci-calculator:latest
+        run: |
+          docker build -t amber1128docker/fibonacci-calculator/server ./server
+          docker build -t amber1128docker/fibonacci-calculator/client ./client
+          docker build -t amber1128docker/fibonacci-calculator/nginx ./nginx
+          docker build -t amber1128docker/fibonacci-calculator/worker ./worker
 
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login --username amber1128docker --password-stdin
 
       - name: Push image to Docker Hub
-        run: docker push amber1128docker/fibonacci-calculator:latest
+        run: |
+          docker push amber1128docker/fibonacci-calculator/server
+          docker push amber1128docker/fibonacci-calculator/client
+          docker push amber1128docker/fibonacci-calculator/nginx
+          docker push amber1128docker/fibonacci-calculator/worker
