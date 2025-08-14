@@ -4,9 +4,6 @@ on:
   push:
     branches:
       - main
-    paths:
-      - "server/Dockerfile"
-      - "client/Dockerfile"
 
 jobs:
   publish_images:
