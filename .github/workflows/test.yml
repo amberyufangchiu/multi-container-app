@@ -16,7 +16,7 @@ jobs:
         run: docker build -t amber1128docker/react-test -f ./client/Dockerfile.dev ./client
 
       - name: Run test
-        run: docker run amber1128docker/react-test npm test -- --coverage
+        run: docker run --rm mydocker/react-test npm test -- --coverage
 
       - name: Build image
         run: |
