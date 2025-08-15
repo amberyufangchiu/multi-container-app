@@ -20,17 +20,17 @@ jobs:
 
       - name: Build image
         run: |
-          docker build -t amber1128docker/fibonacci-calculator/server ./server
-          docker build -t amber1128docker/fibonacci-calculator/client ./client
-          docker build -t amber1128docker/fibonacci-calculator/nginx ./nginx
-          docker build -t amber1128docker/fibonacci-calculator/worker ./worker
+          docker build -t amber1128docker/fibonacci-calculator-server ./server
+          docker build -t amber1128docker/fibonacci-calculator-client ./client
+          docker build -t amber1128docker/fibonacci-calculator-nginx ./nginx
+          docker build -t amber1128docker/fibonacci-calculator-worker ./worker
 
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_HUB_TOKEN }}" | docker login --username amber1128docker --password-stdin
 
       - name: Push image to Docker Hub
         run: |
-          docker push amber1128docker/fibonacci-calculator/server
-          docker push amber1128docker/fibonacci-calculator/client
-          docker push amber1128docker/fibonacci-calculator/nginx
-          docker push amber1128docker/fibonacci-calculator/worker
+          docker push amber1128docker/fibonacci-calculator-server
+          docker push amber1128docker/fibonacci-calculator-client
+          docker push amber1128docker/fibonacci-calculator-nginx
+          docker push amber1128docker/fibonacci-calculator-worker
